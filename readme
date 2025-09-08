@@ -1,0 +1,111 @@
+🟢 1. Estado inicial (participantes carregados)
+
+Suponha que temos 2 participantes no array:
+
+participantes = [
+  { nome: "Fernanda Ribeiro", email: "fernanda@gmail.com", dataInscricao: new Date(...), dataCheckIn: null },
+  { nome: "Rafael Martins", email: "rafael@gmail.com", dataInscricao: new Date(...), dataCheckIn: null }
+];
+
+
+🔽 O HTML gerado pelo atualizarLista(participantes) será:
+
+<tbody>
+  <tr>
+    <td>
+      <strong>Fernanda Ribeiro</strong><br>
+      <small>fernanda@gmail.com</small>
+    </td>
+    <td>há 2 dias</td>
+    <td>
+      <button data-email="fernanda@gmail.com" onclick="fazerCheckIn(event)">
+        Confirmar check-in
+      </button>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Rafael Martins</strong><br>
+      <small>rafael@gmail.com</small>
+    </td>
+    <td>há 3 dias</td>
+    <td>
+      <button data-email="rafael@gmail.com" onclick="fazerCheckIn(event)">
+        Confirmar check-in
+      </button>
+    </td>
+  </tr>
+</tbody>
+
+🟡 2. Após adicionar novo participante (via formulário)
+
+O usuário preenche:
+
+Nome: Juliana Castro
+
+Email: juliana@gmail.com
+
+👉 No adicionarParticipante, o sistema:
+
+Cria o objeto participante.
+
+Coloca ele no início do array:
+
+participantes = [novoParticipante, ...participantes];
+
+
+Agora participantes fica assim:
+
+[
+  { nome: "Juliana Castro", email: "juliana@gmail.com", dataInscricao: agora, dataCheckIn: null },
+  { nome: "Fernanda Ribeiro", ... },
+  { nome: "Rafael Martins", ... }
+]
+
+
+🔽 O HTML atualizado no <tbody>:
+
+<tbody>
+  <tr>
+    <td>
+      <strong>Juliana Castro</strong><br>
+      <small>juliana@gmail.com</small>
+    </td>
+    <td>há alguns segundos</td>
+    <td>
+      <button data-email="juliana@gmail.com" onclick="fazerCheckIn(event)">
+        Confirmar check-in
+      </button>
+    </td>
+  </tr>
+
+  <tr> ... Fernanda Ribeiro ... </tr>
+  <tr> ... Rafael Martins ... </tr>
+</tbody>
+
+
+Ou seja → Juliana aparece no topo da tabela.
+
+🔵 3. Após clicar em "Confirmar check-in"
+
+Suponha que clicamos no botão da Fernanda Ribeiro.
+
+No fazerCheckIn:
+
+O sistema acha o participante pelo data-email.
+
+Atualiza dataCheckIn = new Date().
+
+Re-renderiza a tabela.
+
+Agora o HTML da Fernanda muda:
+
+<tr>
+  <td>
+    <strong>Fernanda Ribeiro</strong><br>
+    <small>fernanda@gmail.com</small>
+  </td>
+  <td>há 2 dias</td>
+  <td>há alguns segundos</td> <!-- antes era um botão -->
+</tr>
